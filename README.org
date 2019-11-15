@@ -1,0 +1,8 @@
+* Zsh Confer
+  A zsh plugin which tries to find configuration files automatically.
+** Example
+   "conf vim" to configure vim
+   The path of the configure file will be choosed automatically.
+   Or you can specify the path of a program by define a variable:
+   vim="$HOME/.vim"
+   And then "conf vim" will open "$HOME/.vim"
