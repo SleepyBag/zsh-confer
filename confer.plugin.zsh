@@ -1,29 +1,32 @@
 [[ -f $HOME/.tmux.conf.local ]] && tmux_conf_file=$HOME/.tmux.conf.local   # in case oh-my-tmux is installed
 
-typeset -A filetable
-filetable=(
-  vim "$HOME/.vimrc"
-  zsh "$HOME/.zshrc" 
-  i3 "$HOME/.config/i3/config" 
-  tmux "$HOME/.tmux.conf.local"
-  haproxy "$HOME/.haproxy.cfg"
-  proxychains "/etc/proxychains.conf"
-  dunst "$HOME/.config/dunst/dunstrc"
-  ranger "$HOME/.config/ranger/rc.conf"
-  termite "$HOME/.config/termite/config"
-  jupyter "$HOME/.jupyter/jupyter_notebook_config.py"
-  polybar "$HOME/.config/polybar/config"
-  ssh "$HOME/.ssh/config"
-  urxvt "$HOME/.Xdefaults"
-  compton "$HOME/.config/compton.conf"
-  rime "$HOME/.config/fcitx/rime/custom.yaml"
-)
-
 function conf() {
+  if [[ -z $confer_filetable ]] {
+    typeset -A confer_filetable
+    confer_filetable=(
+      vim "$HOME/.vimrc"
+      zsh "$HOME/.zshrc" 
+      i3 "$HOME/.config/i3/config" 
+      tmux "$HOME/.tmux.conf.local"
+      haproxy "$HOME/.haproxy.cfg"
+      proxychains "/etc/proxychains.conf"
+      dunst "$HOME/.config/dunst/dunstrc"
+      ranger "$HOME/.config/ranger/rc.conf"
+      termite "$HOME/.config/termite/config"
+      jupyter "$HOME/.jupyter/jupyter_notebook_config.py"
+      polybar "$HOME/.config/polybar/config"
+      ssh "$HOME/.ssh/config"
+      urxvt "$HOME/.Xdefaults"
+      compton "$HOME/.config/compton.conf"
+      rime "$HOME/.config/fcitx/rime/custom.yaml"
+    )
+  }
   # try to set the configure file as the value of the variable whose name is $1
   filepath=${(P)1}
+
   # if not found, try to find the configure file from the file table
-  [[ -z $filepath ]] && filepath=$filetable[$1]
+  [[ -z $filepath ]] && filepath=$confer_filetable[$1]
+  echo $filepath
 
   if [[ $filepath ]] {
     if [[ -z $EDITOR ]] {
