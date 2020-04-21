@@ -20,7 +20,7 @@ function conf() {
     files+="\n"
   }
   fzf_list=$directories"\n"$files
-  fzf_result=$(echo $fzf_list | fzf --border --prompt 'Please choose a file > ')
+  fzf_result=$(echo $fzf_list | fzf --preview 'head -100 $(echo {} | awk "{print $2}")' --border --prompt 'Please choose a file > ')
   fzf_result=($(echo $fzf_result))
   target=$fzf_result[2]
   if [[ ! -z $target ]] {
