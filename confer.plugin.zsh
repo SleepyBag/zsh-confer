@@ -20,7 +20,7 @@ function conf() {
     files+="\n"
   }
   fzf_list=$directories"\n"$files
-  fzf_result=$(echo $fzf_list | fzf --preview 'bat --color=always $(echo {} | awk '"'"'{print $2}'"'"')' --border --prompt 'Please choose a file > ')
+  fzf_result=$(echo $fzf_list | fzf --preview 'file=$(echo {} | awk '"'"'{print $2}'"'"'); [ -f $file ] && bat --color=always $file || ls --color=always $file' --border --prompt 'Please choose a file > ')
   fzf_result=($(echo $fzf_result))
   target=$fzf_result[2]
   if [[ ! -z $target ]] {
